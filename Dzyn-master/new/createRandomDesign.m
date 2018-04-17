@@ -3,15 +3,15 @@ function randomDesign = createRandomDesign(config)
 	X = ones(config.nrows, dim);
 
 	for col=2:dim
-		flipcount = pow2(dim-col+2);
+		flipcount = dim/2;
 		lowerbound = true;
 		counter = 0;
 
 		for row=1:config.nrows
-			if (lowerbound)
-				X(row, col) = config.lb(col);
+			if (rand < 0.5)
+				X(row, col) = config.lb(col - 1);
 			else
-				X(row, col) = config.ub(col);
+				X(row, col) = config.ub(col - 1);
 			end
 
 			counter ++;
@@ -21,6 +21,7 @@ function randomDesign = createRandomDesign(config)
 			end
 		end
 	end
+
 
 	% if continous terms are included
 	X2 = [];
@@ -58,6 +59,9 @@ function randomDesign = createRandomDesign(config)
 
 	randomDesign.p = p;
 
+  %randomDesign.X
+  %randomDesign.p
+  
 	% evaluate fitness
 	randomDesign.fitness = evalFitness(randomDesign, config);
 end
